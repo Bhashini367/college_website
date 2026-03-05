@@ -2,18 +2,14 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
 from .EmailForm import EmailForm
+from .models import Student   
+
 def home(request):
     return render(request,'app1/home.html')
 
 def students(request):
-    students=[
-        {"name":"bhashini","branch":"IT","age":18},
-        {"name":"sanvitha","branch":"CS","age":21},
-        {"name":"harshini","branch":"IT","age":17},
-        {"name":"viharika","branch":"ECE","age":15},
-        {"name":"koushali","branch":"AI","age":19},
-    ]
-    return render(request, 'app1/students.html',{"students":students})
+    students = Student.objects.all()   
+    return render(request, 'app1/students.html', {"students":students})
 
 def colleges(request):
     return render(request, 'app1/colleges.html')
@@ -43,4 +39,3 @@ def send_email(request):
         form = EmailForm()
 
     return render(request, 'app1/submit.html', {'form': form})
-
